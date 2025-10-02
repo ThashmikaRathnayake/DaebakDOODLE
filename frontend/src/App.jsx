@@ -1,12 +1,19 @@
 import { useState } from 'react'
-import Home from './components/home'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home'
+import GameLogSection from './components/GameLogSection'
+import ThemeSelection from './components/ThemeSelection'
 
 
 function App() {
   return (
-    <>
-      <Home />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home/>} />
+        <Route path='gameLog' element={<GameLogSection />} />
+        <Route path='themeSelection' element={<ThemeSelection />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

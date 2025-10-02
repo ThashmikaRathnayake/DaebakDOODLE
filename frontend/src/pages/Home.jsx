@@ -1,5 +1,6 @@
 import React from 'react'
-import GridMotion from './GridMotion';
+import { useNavigate } from 'react-router-dom';
+import GridMotion from '../components/GridMotion';
 import image1 from '../assets/homeImages/slide1.jpg'
 import image2 from '../assets/homeImages/slide2.jpg'
 import image3 from '../assets/homeImages/slide3.jpg'
@@ -88,28 +89,22 @@ const items = [
 ];
 
 const Home = () => {
+
+    const navigate = useNavigate();
     return (
         <div className="relative w-full h-screen">
 
-            {/* Grid as background */}
             <GridMotion items={items} />
 
-            {/* Semi-transparent overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-purple-900/60 via-pink-900/40 to-indigo-900/60 backdrop-blur-[2px] mix-blend-multiply z-10"></div>
 
-            {/* Centered buttons */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col gap-6 z-20">
-                {/* Start Game Button */}
-                <button className="relative inline-block text-white font-bold text-lg tracking-wider uppercase px-8 py-4 border-2 border-pink-400  shadow-2xl z-10 transition-all duration-300 ease-in-out active:scale-90
-      before:absolute before:top-0 before:left-1/2 before:right-1/2 before:bottom-0  before:bg-gradient-to-r before:from-pink-400 before:via-purple-400 before:to-blue-400 before:z-[-1] before:opacity-0 before:transition-all before:duration-500
-      hover:before:left-0 hover:before:right-0 hover:before:opacity-100">
+                <button 
+                    onClick={() => navigate('/themeSelection')}
+                    className="relative inline-block text-white font-bold text-lg tracking-wider uppercase px-8 py-4 border-2 border-pink-400  shadow-2xl z-10 transition-all duration-300 ease-in-out active:scale-90 before:absolute before:top-0 before:left-1/2 before:right-1/2 before:bottom-0  before:bg-gradient-to-r before:from-pink-400 before:via-purple-400 before:to-blue-400 before:z-[-1] before:opacity-0 before:transition-all before:duration-500 hover:before:left-0 hover:before:right-0 hover:before:opacity-100">
                     Start Game
                 </button>
-
-                {/* How to Play Button */}
-                <button className="relative inline-block text-white font-bold text-lg tracking-wider uppercase px-8 py-4 border-2 border-purple-400  shadow-2xl z-10 transition-all duration-300 ease-in-out active:scale-90
-      before:absolute before:top-0 before:left-1/2 before:right-1/2 before:bottom-0  before:bg-gradient-to-r before:from-purple-600 before:via-fuchsia-500 before:to-purple-400 before:z-[-1] before:opacity-0 before:transition-all before:duration-500
-      hover:before:left-0 hover:before:right-0 hover:before:opacity-100">
+                <button className="relative inline-block text-white font-bold text-lg tracking-wider uppercase px-8 py-4 border-2 border-purple-400  shadow-2xl z-10 transition-all duration-300 ease-in-out active:scale-90 before:absolute before:top-0 before:left-1/2 before:right-1/2 before:bottom-0  before:bg-gradient-to-r before:from-purple-600 before:via-fuchsia-500 before:to-purple-400 before:z-[-1] before:opacity-0 before:transition-all before:duration-500 hover:before:left-0 hover:before:right-0 hover:before:opacity-100">
                     How to Play
                 </button>
             </div>
