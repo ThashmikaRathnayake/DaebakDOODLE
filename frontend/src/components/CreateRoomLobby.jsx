@@ -136,6 +136,7 @@ const GameLobby = () => {
                     {/* Start Game Button */}
                     <div className="mt-6 flex justify-center shrink-0">
                         <button
+                            onClick={() => navigate("/game")}
                             className="px-8 py-3 bg-gradient-to-r from-purple-300 to-indigo-300 text-white text-base font-semibold rounded-xl shadow-lg hover:opacity-90 transition"
                             disabled={players.length < 2}
                         >

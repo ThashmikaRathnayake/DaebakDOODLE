@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import GameLogSection from './components/GameLogSection'
 import ThemeSelection from './components/ThemeSelection'
 import CreateRoomLobby from './components/CreateRoomLobby';
+import GameScreen from './components/GameScreen';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path='gameLog' element={<GameLogSection />} />
         <Route path='themeSelection' element={<ThemeSelection />} />
         <Route path='/gameLobby' element={<CreateRoomLobby />} />
+        <Route path='/game' element={<GameScreen />} />
       </Routes>
     </BrowserRouter>
   )
