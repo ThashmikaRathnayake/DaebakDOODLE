@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home'
 import GameLogSection from './components/GameLogSection'
 import ThemeSelection from './components/ThemeSelection'
+import CreateRoomLobby from './components/CreateRoomLobby';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Route path='/' element={<Home/>} />
         <Route path='gameLog' element={<GameLogSection />} />
         <Route path='themeSelection' element={<ThemeSelection />} />
+        <Route path='/gameLobby' element={<CreateRoomLobby />} />
       </Routes>
     </BrowserRouter>
   )

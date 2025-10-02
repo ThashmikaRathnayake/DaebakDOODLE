@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const GameLobby = () => {
   const [mode, setMode] = useState("create"); 
   const [nickname, setNickname] = useState("");
   const [roomCode, setRoomCode] = useState("");
   const [playerCount, setPlayerCount] = useState(2);
+
+  const navigate = useNavigate();
 
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gradient-to-br from-pink-100 via-purple-100 to-pink-200">
@@ -61,7 +64,9 @@ const GameLobby = () => {
         </div>
 
         {mode === "create" && (
-          <button className="w-full px-6 py-3 rounded-xl font-bold uppercase bg-pink-500 text-white hover:bg-pink-600 transition-all shadow-md">
+          <button 
+            onClick={() => navigate('/gameLobby')}
+            className="w-full px-6 py-3 rounded-xl font-bold uppercase bg-pink-500 text-white hover:bg-pink-600 transition-all shadow-md">
             Create Room 
           </button>
         )}
