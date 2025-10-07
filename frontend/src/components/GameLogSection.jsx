@@ -80,7 +80,9 @@ const GameLobby = () => {
               onChange={(e) => setRoomCode(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border-2 border-purple-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-300 outline-none text-gray-700"
             />
-            <button className="w-full px-6 py-3 rounded-xl font-bold uppercase bg-purple-500 text-white hover:bg-purple-600 transition-all shadow-md">
+            <button 
+              onClick={()=>navigate('/game')}
+              className="w-full px-6 py-3 rounded-xl font-bold uppercase bg-purple-500 text-white hover:bg-purple-600 transition-all shadow-md">
               Join Room 
             </button>
           </div>
