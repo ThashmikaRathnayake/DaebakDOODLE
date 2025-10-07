@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { BsCopy } from "react-icons/bs";
 import { IoIosHome } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
-const GameLobby = () => {
+const CreateRoomLobby = () => {
     const navigate = useNavigate();
 
     const [roomCode] = useState("TGD46J");
@@ -24,50 +25,65 @@ const GameLobby = () => {
     };
 
     return (
-        <div className="relative h-screen w-screen flex flex-col overflow-hidden">
-            {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-slate-100 to-gray-200"></div>
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/40 via-purple-900/40 to-slate-900/50 backdrop-blur-[3px] mix-blend-multiply"></div>
+        <div className="relative h-screen w-screen flex flex-col overflow-hidden font-sans text-white">
+            {/* Dark gradient background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#080010] via-[#13001f] to-[#24002f]" />
 
-            {/* Lobby Content */}
+            {/* Floating neon orbs */}
+            <div className="absolute top-10 left-10 w-72 h-72 bg-pink-500/20 rounded-full blur-[100px] animate-pulse" />
+            <div className="absolute bottom-10 right-10 w-72 h-72 bg-purple-500/20 rounded-full blur-[100px] animate-pulse delay-2000" />
+            <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-purple-400/10 rounded-full blur-[120px] animate-pulse" />
+            <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-pink-400/10 rounded-full blur-[120px] animate-pulse delay-1500" />
+
+            {/* Main content */}
             <div className="relative flex flex-1 gap-6 px-6 pb-6 pt-5 z-10 overflow-hidden">
                 {/* Left: Room Code */}
-                <div className="flex-1 bg-white/80 rounded-2xl shadow-2xl flex flex-col border border-slate-200 overflow-hidden">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="flex-1 bg-[#1a001f]/40 backdrop-blur-2xl rounded-3xl shadow-[0_0_30px_rgba(255,0,255,0.2)] flex flex-col border border-white/20 overflow-hidden"
+                >
                     <div className="p-4 flex items-center">
                         <button
                             onClick={() => navigate("/")}
-                            className="px-4 py-2 text-purple-600 font-semibold border-2 border-purple-400 rounded-lg shadow-md hover:bg-gradient-to-r hover:from-purple-100 hover:to-indigo-100 hover:text-gray-500 transition flex items-center gap-2"
+                            className="px-4 py-2 text-[#5b0f7e]font-semibold border-2 border-[#b5179e] rounded-lg shadow-md hover:bg-gradient-to-r from-transparent via-purple-400/20 to-transparent hover:text-white transition flex items-center gap-2"
                         >
                             ← <IoIosHome />
                         </button>
                     </div>
 
                     <div className="flex flex-col flex-1 items-center justify-center px-6 pb-6">
-                        <h2 className="text-3xl font-extrabold mb-6 text-gray-700 drop-shadow">
+                        <h2 className="text-3xl font-extrabold mb-6 text-white drop-shadow-lg">
                             Room Code
                         </h2>
                         <div className="flex justify-center items-center gap-4 mb-4">
-                            <span className="px-10 py-4 text-3xl font-extrabold text-white rounded-xl shadow-lg bg-gradient-to-r from-indigo-100 via-purple-100 to-slate-200">
+                            <span className="px-10 py-4 text-3xl font-extrabold text-white rounded-xl shadow-lg bg-gradient-to-r from-transparent via-purple-400/20 to-transparent">
                                 {roomCode}
                             </span>
                             <button
                                 onClick={copyToClipboard}
-                                className="p-3 rounded-lg bg-gray-100 hover:bg-gradient-to-r hover:from-purple-100 hover:to-indigo-100 hover:text-white shadow transition"
+                                className="p-3 rounded-lg bg-[#1a001f]/50 backdrop-blur-md hover:bg-gradient-to-r from-transparent via-purple-400/20 to-transparent hover:text-white shadow transition"
                             >
                                 <BsCopy size={22} />
                             </button>
                         </div>
-                        <p className="text-gray-600 text-base text-center italic">
+                        <p className="text-gray-300 text-base text-center italic">
                             {copied
                                 ? "Copied to clipboard!"
                                 : "Share this code with your friends to invite them!"}
                         </p>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Right: Players */}
-                <div className="flex-[2] bg-white/80 rounded-2xl shadow-2xl p-6 flex flex-col border border-slate-200 h-full">
-                    <h2 className="text-center text-2xl font-extrabold mb-6 text-purple-800 drop-shadow shrink-0">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="flex-[2] bg-[#1a001f]/40 backdrop-blur-2xl rounded-3xl shadow-[0_0_30px_rgba(255,0,255,0.2)] p-6 flex flex-col border border-white/20 h-full"
+                >
+                    <h2 className="text-center text-2xl font-extrabold mb-6 text-white drop-shadow-lg">
                         👥 Players ({players.length}/{maxPlayers})
                     </h2>
 
@@ -79,17 +95,17 @@ const GameLobby = () => {
                                 .map((player) => (
                                     <div
                                         key={player.id}
-                                        className="relative w-44 h-56 drop-shadow-xl rounded-xl overflow-hidden bg-gradient-to-br from-indigo-50 via-purple-50 to-slate-100 flex items-center justify-center border border-indigo-200"
+                                        className="relative w-44 h-56 drop-shadow-xl rounded-xl overflow-hidden bg-[#1a001f]/40 backdrop-blur-2xl flex items-center justify-center border border-white/20"
                                     >
-                                        <div className="absolute inset-0.5 flex flex-col items-center justify-between text-gray-800 rounded-xl bg-white/70 backdrop-blur-md p-4 shadow-lg">
-                                            <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-r from-indigo-200 via-purple-200 to-slate-300 text-gray-900 text-xl font-bold shadow-inner">
+                                        <div className="absolute inset-0.5 flex flex-col items-center justify-between text-white rounded-xl bg-[#1a001f]/30 backdrop-blur-md p-4 shadow-lg">
+                                            <div className="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-r from-[#8b1fa9] via-[#5b0f7e] to-[#3a0071] shadow-[0_0_15px_rgba(139,31,169,0.4)] text-white text-xl font-bold">
                                                 {player.name.charAt(0).toUpperCase()}
                                             </div>
                                             <div className="mt-2 text-center">
-                                                <p className="text-base font-semibold text-gray-800">{player.name}</p>
-                                                <p className="text-xs text-gray-600">Score: {player.score}</p>
+                                                <p className="text-base font-semibold">{player.name}</p>
+                                                <p className="text-xs">Score: {player.score}</p>
                                             </div>
-                                            <span className="mt-2 px-3 py-1 text-xs bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-full font-semibold shadow">
+                                            <span className="mt-2 px-3 py-1 text-xs bg-gradient-to-r from-[#b5179e] via-[#8b1fa9] to-[#5b0f7e] text-white rounded-full font-semibold shadow-[0_0_15px_rgba(181,23,158,0.5)] tracking-wide">
                                                 Host
                                             </span>
                                         </div>
@@ -104,14 +120,14 @@ const GameLobby = () => {
                                 .map((player) => (
                                     <div
                                         key={player.id}
-                                        className="relative w-full h-48 drop-shadow-lg rounded-xl overflow-hidden bg-gradient-to-br from-indigo-50 via-purple-50 to-slate-100 flex items-center justify-center border border-indigo-200"
+                                        className="relative w-full h-48 drop-shadow-lg rounded-xl overflow-hidden bg-[#1a001f]/40 backdrop-blur-2xl flex items-center justify-center border border-white/20"
                                     >
-                                        <div className="absolute inset-0.5 flex flex-col items-center justify-center text-gray-800 rounded-xl bg-white/70 backdrop-blur-md p-4 shadow-md">
-                                            <div className="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-r from-indigo-200 via-purple-200 to-slate-300 text-gray-900 text-lg font-bold shadow-inner">
+                                        <div className="absolute inset-0.5 flex flex-col items-center justify-center text-white rounded-xl bg-[#1a001f]/30 backdrop-blur-md p-4 shadow-md">
+                                            <div className="w-14 h-14 flex items-center justify-center rounded-full bg-gradient-to-r from-[#8b1fa9] via-[#5b0f7e] to-[#3a0071] shadow-[0_0_15px_rgba(139,31,169,0.4)] text-white text-lg font-bold">
                                                 {player.name.charAt(0).toUpperCase()}
                                             </div>
-                                            <p className="mt-2 text-sm font-semibold text-gray-800">{player.name}</p>
-                                            <p className="text-xs text-gray-600">Score: {player.score}</p>
+                                            <p className="mt-2 text-sm font-semibold">{player.name}</p>
+                                            <p className="text-xs">Score: {player.score}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -120,10 +136,10 @@ const GameLobby = () => {
                             {Array.from({ length: maxPlayers - players.length }).map((_, i) => (
                                 <div
                                     key={i}
-                                    className="relative w-full h-48 drop-shadow-inner rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 flex items-center justify-center border-2 border-dashed border-gray-300"
+                                    className="relative w-full h-48 drop-shadow-inner rounded-xl overflow-hidden bg-[#1a001f]/30 backdrop-blur-md flex items-center justify-center border-2 border-dashed border-white/20"
                                 >
-                                    <div className="absolute inset-0.5 flex flex-col items-center justify-center rounded-xl bg-white/60 backdrop-blur-sm text-gray-400">
-                                        <div className="w-14 h-14 flex items-center justify-center rounded-full bg-gray-200 text-lg">
+                                    <div className="absolute inset-0.5 flex flex-col items-center justify-center rounded-xl bg-[#1a001f]/20 backdrop-blur-sm text-gray-300">
+                                        <div className="w-14 h-14 flex items-center justify-center rounded-full bg-[#1a001f]/50 text-white text-lg">
                                             👤
                                         </div>
                                         <p className="mt-2 text-xs text-center">Waiting...</p>
@@ -135,20 +151,21 @@ const GameLobby = () => {
 
                     {/* Start Game Button */}
                     <div className="mt-6 flex justify-center shrink-0">
-                        <button
+                        <motion.button
+                            whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(139,31,169,0.6)" }}
+                            whileTap={{ scale: 0.95 }}
                             onClick={() => navigate("/game")}
-                            className="px-8 py-3 bg-gradient-to-r from-purple-300 to-indigo-300 text-white text-base font-semibold rounded-xl shadow-lg hover:opacity-90 transition"
+                            className="px-8 py-3 bg-gradient-to-r from-[#8b1fa9] via-[#5b0f7e] to-[#3a0071] text-white text-base font-semibold rounded-xl shadow-[0_0_25px_rgba(139,31,169,0.5)] backdrop-blur-md hover:opacity-90 transition"
                             disabled={players.length < 2}
                         >
                             Start Game
-                        </button>
+                        </motion.button>
+
                     </div>
-                </div>
-
-
+                </motion.div>
             </div>
         </div>
     );
 };
 
-export default GameLobby;
+export default CreateRoomLobby;
