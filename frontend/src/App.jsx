@@ -13,8 +13,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home/>} />
-        <Route path='gameLog' element={<GameLogSection />} />
-        <Route path='themeSelection' element={<ThemeSelection />} />
+        <Route path='/gameLog' element={<GameLogSection />} />
+        <Route path='/themeSelection' element={<ThemeSelection />} />
         <Route path='/gameLobby' element={<CreateRoomLobby />} />
         <Route path='/game' element={<GameScreen />} />
         <Route path='/howToPlay' element={<HowToPlay />} />
