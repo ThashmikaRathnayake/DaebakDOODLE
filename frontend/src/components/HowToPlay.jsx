@@ -61,7 +61,7 @@ const HowToPlay = () => {
                 className="relative z-10 text-center max-w-7xl px-10 py-12 bg-white/10 backdrop-blur-2xl rounded-3xl shadow-[0_0_25px_rgba(255,255,255,0.2)] border border-white/20"
             >
                 <h1 className="text-4xl font-extrabold mb-10 bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-lg">
-                    🎨 How to Play DaebakDOODLE
+                     How to Play DaebakDOODLE
                 </h1>
 
                 {/* Step Cards (UIverse style) */}
@@ -126,7 +126,7 @@ const HowToPlay = () => {
                         onClick={() => navigate("/themeSelection")}
                         className="px-10 py-4 rounded-2xl text-lg font-semibold text-white bg-gradient-to-r from-transparent via-pink-400/10 to-transparent shadow-[0_0_20px_rgba(216,180,254,0.4)] hover:shadow-[0_0_35px_rgba(216,180,254,0.6)] transition-all duration-500 ease-out backdrop-blur-md border border-white/20"
                     >
-                        ✨ Got it! Let's Play ✨
+                        Let's Make It Daebak!
                     </motion.button>
                 </div>
 

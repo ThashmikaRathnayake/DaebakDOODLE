@@ -1,104 +1,128 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { MdDeleteOutline } from "react-icons/md";
+import { FaUndo } from "react-icons/fa";
 
 const GameScreen = () => {
-  const players = ["Thash", "Alice", "Bop", "Dana"];
+  const players = [
+    { name: "KBBR", score: 12, img: "https://i.pinimg.com/736x/11/18/61/11186158397a0d0ea0ebac9bc4c1fa97.jpg" },
+    { name: "TDR", score: 18, img: "https://i.pinimg.com/1200x/8f/63/52/8f63524597afe9bbe3a68c294c0dfdb1.jpg" },
+    { name: "SGR", score: 9, img: "https://i.pinimg.com/1200x/e9/24/3a/e9243a618b17990c278c20ed8b4bd1ce.jpg" },
+    { name: "OC", score: 15, img: "https://i.pinimg.com/736x/a4/03/91/a403916e4a6ad8df28b18744fff47702.jpg" },
+  ];
 
   return (
-    <div className="h-screen w-full flex flex-col bg-gradient-to-br from-[#080010] via-[#13001f] to-[#24002f] text-white overflow-hidden p-6">
-      {/* Floating neon orbs */}
+    <div className="h-screen w-full flex flex-col bg-gradient-to-br from-[#080010] via-[#13001f] to-[#24002f] text-white overflow-hidden relative">
+      {/* Neon glows */}
       <motion.div
-        className="absolute top-10 left-10 w-72 h-72 bg-pink-500/20 rounded-full blur-[100px]"
+        className="absolute top-10 left-10 w-80 h-80 bg-pink-500/20 rounded-full blur-[120px]"
         animate={{ scale: [1, 1.1, 1] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="absolute bottom-10 right-10 w-72 h-72 bg-purple-500/20 rounded-full blur-[100px]"
+        className="absolute bottom-10 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-[140px]"
         animate={{ scale: [1, 1.1, 1] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
       />
 
-      {/* Top Bar - Round Info + Guess Word + Scoreboard */}
-      <div className="flex items-center mb-6">
-        {/* Round Info - Top Left */}
-        <div className="text-sm font-semibold text-gray-200 px-3">
-          Round 0/10
-        </div>
-
-        {/* Spacer */}
-        <div className="flex-1 flex justify-center">
-          {/* Centered Guess Word */}
-          <div className="flex flex-col items-center text-center">
-            <h2 className="text-2xl font-bold mb-2">You're the Drawer!</h2>
-            <div className="flex gap-2 items-center">
-              <p className="text-4xl font-extrabold text-white">Guess Word:</p>
-              <motion.p
-                animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.05, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 drop-shadow-[0_0_8px_rgba(139,92,246,0.7)]"
-              >
-                APPLE
-              </motion.p>
-            </div>
+      {/* TOP BAR */}
+      <div className="relative z-10 flex justify-between items-center px-8 py-4 border-b border-white/10 backdrop-blur-md">
+        <p className="text-sm text-gray-300 font-semibold">Round 3 / 10</p>
+        <div className="text-center">
+          <h2 className="text-xl font-bold text-pink-300">You’re Drawing</h2>
+          <div className="flex items-center justify-center gap-2">
+            <p className="text-lg text-gray-300">Word:</p>
+            <motion.span
+              animate={{ opacity: [0.7, 1, 0.7], scale: [1, 1.05, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="text-2xl font-extrabold bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent"
+            >
+              APPLE
+            </motion.span>
           </div>
         </div>
+        <div className="text-sm text-gray-400 font-semibold">⏱ 25s left</div>
+      </div>
 
-        {/* Right - Scoreboard */}
-        <div className="flex gap-4">
+      {/* MAIN AREA */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* LEFT: PLAYER LIST */}
+        <div className="w-60 border-r border-white/10 backdrop-blur-md p-4 space-y-3 overflow-y-auto">
+          <h3 className="text-lg font-semibold text-pink-300 mb-3">Players</h3>
           {players.map((player, idx) => (
             <motion.div
               key={idx}
-              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(255,105,180,0.6)" }}
-              className="flex flex-col items-center backdrop-blur-md rounded-3xl px-4 py-3 shadow-lg transition-transform border-2 border-pink-400"
+              whileHover={{ scale: 1.02, backgroundColor: "rgba(91,15,126,0.2)" }}
+              className="flex items-center gap-3 p-2 rounded-lg border border-pink-400/40 bg-[#1a001f]/40"
             >
-              <motion.div
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="w-16 h-16 rounded-full bg-gradient-to-r from-[#8b1fa9] via-[#5b0f7e] to-[#3a0071] shadow-[0_0_15px_rgba(139,31,169,0.4)] flex items-center justify-center font-bold text-white text-xl"
-              >
-                {player.charAt(0)}
-              </motion.div>
-              <p className="mt-2 font-medium">{player}</p>
-              <span className="mt-1 font-bold">{Math.floor(Math.random() * 20)}</span>
+              <img
+                src={player.img}
+                alt={player.name}
+                className="w-10 h-10 rounded-full object-cover border border-pink-400/40"
+              />
+              <div className="flex-1">
+                <p className="font-medium text-white">{player.name}</p>
+                <p className="text-sm text-pink-400 font-semibold">{player.score} pts</p>
+              </div>
             </motion.div>
           ))}
         </div>
-      </div>
 
-      {/* Main Game Area */}
-      <div className="flex flex-1 gap-4">
-        {/* Whiteboard */}
+        {/* CENTER: WHITEBOARD */}
         <motion.div
-          className="flex-1 backdrop-blur-md border-2 border-gray-600 rounded-3xl shadow-lg flex flex-col p-4"
+          className="flex-1 flex flex-col p-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
         >
-          <h3 className="text-lg font-semibold mb-2 text-white">Whiteboard</h3>
-          <div className="flex-1 rounded-lg border border-gray-500"></div>
+          <div className="flex-1 bg-black/30 rounded-2xl border border-gray-600 shadow-lg relative">
+            <div className="absolute inset-0 flex items-center justify-center text-gray-500 italic">
+              (Whiteboard Area)
+            </div>
+          </div>
+
+          {/* Controls */}
+          <div className="mt-4 flex justify-center gap-4">
+            <button className="px-4 py-2 text-2xl rounded-lg bg-[#1a001f]/50 border border-pink-400/40 hover:bg-[#3a0071]/40 transition">
+              <MdDeleteOutline />
+            </button>
+            <button className="px-4 py-2 text-1xl rounded-lg bg-[#1a001f]/50 border border-pink-400/40 hover:bg-[#3a0071]/40 transition">
+              <FaUndo />
+            </button>
+            <button className="px-4 py-2 rounded-lg bg-[#5b0f7e]/70 hover:bg-[#8b1fa9]/80 transition">
+              Submit
+            </button>
+          </div>
         </motion.div>
 
-        {/* Chat Panel */}
+        {/* RIGHT: CHAT PANEL */}
         <motion.div
-          className="w-80 flex flex-col backdrop-blur-md border border-gray-600 rounded-3xl shadow-lg overflow-hidden"
+          className="w-80 flex flex-col border-l border-white/10 backdrop-blur-md p-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <h3 className="text-lg font-semibold text-center mt-2 text-white">Chat & Guess</h3>
-          <div className="flex-1 p-3 overflow-y-auto space-y-2">
-            <p><span className="font-bold text-pink-400">Alice:</span> Is it a fruit?</p>
-            <p><span className="font-bold text-pink-400">Thash:</span> Apple?</p>
+          <h3 className="text-lg font-semibold text-center mb-3 text-pink-300">Chat & Guess</h3>
+          <div className="flex-1 overflow-y-auto space-y-2 text-sm">
+            <p>
+              <span className="font-bold text-pink-400">TDR:</span> Is it a fruit?
+            </p>
+            <p>
+              <span className="font-bold text-pink-400">KBBR:</span> Apple?
+            </p>
           </div>
-          <div className="p-2 flex gap-2">
+          <div className="mt-3 flex gap-2">
             <input
               type="text"
               placeholder="Type your guess..."
-              className="flex-1 rounded-xl px-3 py-2 text-sm focus:outline-none text-white bg-gray-800 border border-gray-600 placeholder-gray-400"
+              className="flex-1 rounded-xl px-3 py-2 bg-[#1a001f]/60 border border-gray-600 text-white placeholder-gray-400 focus:outline-none"
             />
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(255,105,180,0.6)" }}
-              className="bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 hover:brightness-110 px-4 py-2 rounded-xl text-white font-semibold transition-all"
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 0 20px rgba(255,105,180,0.6)",
+              }}
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 font-semibold hover:brightness-110 transition"
             >
               Send
             </motion.button>
