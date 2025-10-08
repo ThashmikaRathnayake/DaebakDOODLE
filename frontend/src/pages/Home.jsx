@@ -100,7 +100,7 @@ const Home = () => {
 
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col gap-6 z-20">
                 <button 
-                    onClick={() => navigate('/themeSelection')}
+                    onClick={() => navigate('/gameLog')}
                     className="relative inline-block text-white font-bold text-lg tracking-wider uppercase px-8 py-4 border-2 border-pink-400  shadow-2xl z-10 transition-all duration-300 ease-in-out active:scale-90 before:absolute before:top-0 before:left-1/2 before:right-1/2 before:bottom-0  before:bg-gradient-to-r before:from-pink-400 before:via-purple-400 before:to-blue-400 before:z-[-1] before:opacity-0 before:transition-all before:duration-500 hover:before:left-0 hover:before:right-0 hover:before:opacity-100">
                     Start Game
                 </button>
