@@ -108,20 +108,20 @@ const CreateRoomLobby = () => {
             </div>
 
             {/* Lobby area */}
-            <div className="relative z-20 flex flex-col items-center justify-center h-full px-6 pb-10">
+            <div className="relative z-20 flex flex-col items-center justify-start h-full px-6 pt-8 pb-10">
                 {/* Host card */}
                 <motion.div
                     initial={{ opacity: 0, y: -30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="relative w-48 h-56 mb-8 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(139,31,169,0.5)] border-2 border-pink-500/60"
+                    className="relative w-48 h-56 mb-6 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(139,31,169,0.5)] border-2 border-pink-500/60"
                 >
                     <img
                         src={players[0].img}
                         alt={players[0].name}
                         className="absolute inset-0 w-full h-full object-cover brightness-90"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end items-center pb-4">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end items-center pb-1">
                         <p className="font-semibold text-lg">{players[0].name}</p>
                         <span className="mt-1 px-3 py-1 text-xs bg-gradient-to-r from-[#b5179e] to-[#5b0f7e] rounded-full font-bold tracking-wide shadow-[0_0_15px_rgba(181,23,158,0.4)]">
                             HOST
@@ -181,7 +181,7 @@ const CreateRoomLobby = () => {
                     whileTap={{ scale: 0.95 }}
                     onClick={() => navigate("/game")}
                     disabled={players.length < 2}
-                    className="mt-12 px-10 py-3 bg-gradient-to-r from-[#8b1fa9] via-[#5b0f7e] to-[#3a0071] text-white font-semibold rounded-xl shadow-[0_0_25px_rgba(139,31,169,0.5)] hover:opacity-90 transition disabled:opacity-50"
+                    className="mt-8 px-10 py-3 bg-gradient-to-r from-[#8b1fa9] via-[#5b0f7e] to-[#3a0071] text-white font-semibold rounded-xl shadow-[0_0_25px_rgba(139,31,169,0.5)] hover:opacity-90 transition disabled:opacity-50"
                 >
                     Start Game
                 </motion.button>

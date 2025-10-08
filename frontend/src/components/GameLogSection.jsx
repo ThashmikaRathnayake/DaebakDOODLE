@@ -12,13 +12,8 @@ const GameLogSection = () => {
 
   const navigate = useNavigate();
 
-  const handleCreate = () => {
-    if (!nickname.trim()) return;
-    navigate("/gameLobby", { state: { theme, nickname } });
-  };
-
   return (
-    <div className="relative flex flex-col h-screen w-full items-center justify-between font-sans text-white overflow-hidden px-6 pt-6 pb-10">
+    <div className="relative flex flex-col h-screen w-full items-center justify-between font-sans text-white overflow-hidden px-6 pt-4 pb-10">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#080010] via-[#13001f] to-[#24002f]" />
 
@@ -33,7 +28,7 @@ const GameLogSection = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-5xl font-extrabold mb-8 bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-xl"
+        className="text-5xl font-extrabold mb-4 bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent drop-shadow-xl"
       >
         Get Started
       </motion.h1>
@@ -58,6 +53,9 @@ const GameLogSection = () => {
             `}
           >
             {theme === "kdrama" ? "K-Drama Mode" : "K-Pop Mode"}
+            <p className="text-xs text-gray-300 mt-1 opacity-70">
+              Click to switch theme
+            </p>
           </motion.button>
         </AnimatePresence>
       </motion.div>
@@ -140,7 +138,7 @@ const GameLogSection = () => {
           <motion.button
             whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255,105,180,0.6)" }}
             whileTap={{ scale: 0.95 }}
-            onClick={handleCreate}
+            onClick={() => navigate("/gameLobby")}
             className="w-full px-6 py-3 rounded-xl font-bold uppercase bg-gradient-to-r from-pink-400 via-pink-500 to-pink-400 text-white shadow-md transition-all duration-300"
           >
             Create Room

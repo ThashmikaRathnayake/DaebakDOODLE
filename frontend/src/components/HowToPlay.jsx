@@ -9,28 +9,28 @@ const HowToPlay = () => {
 
     const steps = [
         {
+            icon: <Sparkles size={22} className="text-purple-400" />,
+            title: "Select Theme",
+            description:
+                "Pick your vibe K-Drama or K-Pop and set the number of players to kick off the DaebakDOODLE fun!",
+        },
+        {
             icon: <Users size={22} className="text-purple-400" />,
             title: "Join a Room",
             description:
-                "Enter your nickname and either create a new room or join your friend’s room using a code.",
+                "Enter your nickname, then create a new room or hop into a friend's room with a code.",
         },
         {
             icon: <Pencil size={22} className="text-purple-400" />,
             title: "Start Drawing",
             description:
-                "When it’s your turn, draw the given word on the real-time whiteboard. Others will guess what it is!",
-        },
-        {
-            icon: <Sparkles size={22} className="text-purple-400" />,
-            title: "Guess Faster",
-            description:
-                "Type your guesses in real-time as the drawing unfolds. The faster you guess, the higher your score!",
+                "When it's your turn, draw the given word on the whiteboard. Be creative and make it guessable!",
         },
         {
             icon: <Clock size={22} className="text-purple-400" />,
-            title: "Score & Next Round",
+            title: "Guess Faster",
             description:
-                "After each round, scores update instantly. Take turns drawing until the game ends!",
+                "Type your guesses in real-time as the drawing unfolds. The quicker you guess, the higher your score!",
         },
     ];
 
