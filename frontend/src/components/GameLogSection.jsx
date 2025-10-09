@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { PiUserDuotone } from "react-icons/pi";
+import { createRoom, joinRoom } from "../api/roomApi";
 
 const GameLogSection = () => {
   const [mode, setMode] = useState("create");
@@ -9,8 +10,41 @@ const GameLogSection = () => {
   const [roomCode, setRoomCode] = useState("");
   const [playerCount, setPlayerCount] = useState(2);
   const [theme, setTheme] = useState("kdrama");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+    const handleCreateRoom = async () => {
+    if (!nickname.trim()) return alert("Please enter your nickname");
+    setLoading(true);
+    try {
+      const res = await createRoom(nickname, playerCount);
+      console.log("Room Created:", res);
+      navigate("/gameLobby", { state: { room: res.room, player: nickname } });
+    } catch (err) {
+      console.error(err);
+      alert("Failed to create room");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleJoinRoom = async () => {
+    if (!nickname.trim() || !roomCode.trim())
+      return alert("Please enter your nickname and room code");
+
+    setLoading(true);
+    try {
+      const res = await joinRoom(roomCode, nickname);
+      console.log("Joined Room:", res);
+      navigate("/gameLobby", { state: { room: res.room, player: nickname } });
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Failed to join room");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="relative flex flex-col h-screen w-full items-center justify-between font-sans text-white overflow-hidden px-6 pt-4 pb-10">
@@ -136,12 +170,13 @@ const GameLogSection = () => {
 
         {mode === "create" && (
           <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255,105,180,0.6)" }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => navigate("/gameLobby")}
+            disabled={loading}
+            onClick={handleCreateRoom}
             className="w-full px-6 py-3 rounded-xl font-bold uppercase bg-gradient-to-r from-pink-400 via-pink-500 to-pink-400 text-white shadow-md transition-all duration-300"
           >
-            Create Room
+            {loading ? "Creating..." : "Create Room"}
           </motion.button>
         )}
 
@@ -155,12 +190,13 @@ const GameLogSection = () => {
               className="w-full px-4 py-3 rounded-xl border-2 border-white/30 bg-white/5 text-white placeholder-gray-300 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 outline-none transition"
             />
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(128,0,255,0.6)" }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => navigate("/game")}
+              disabled={loading}
+              onClick={handleJoinRoom}
               className="w-full px-6 py-3 rounded-xl font-bold uppercase bg-gradient-to-r from-purple-400 via-purple-500 to-purple-400 text-white shadow-md transition-all duration-300"
             >
-              Join Room
+              {loading ? "Joining..." : "Join Room"}
             </motion.button>
           </div>
         )}

@@ -6,10 +6,7 @@ export async function connectDB(uri) {
     return null;
   }
   try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(uri);
     console.log("MongoDB connected");
     return mongoose;
   } catch (err) {

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { BsCopy } from "react-icons/bs";
 import { IoIosHome } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -6,20 +7,34 @@ import { motion, AnimatePresence } from "framer-motion";
 import { BsCheckLg } from "react-icons/bs";
 
 const CreateRoomLobby = () => {
+    const { state } = useLocation();
     const navigate = useNavigate();
+    const room = state?.room;
 
-    const [roomCode] = useState("TGD46J");
+    if (!room) {
+        return (
+        <div className="flex items-center justify-center h-screen text-white">
+            <p>Room data not found.</p>
+        </div>
+        );
+    }
+
+    const [roomCode] = useState(room?.roomCode || "-----");
+    const players = room?.players || [];
+    const maxPlayers = room?.maxPlayers || 4;
+    
+    const hostPlayer = players.find(p => p.isHost);
+
     const [copied, setCopied] = useState(false);
     const [hovered, setHovered] = useState(false);
 
-    const players = [
-        { id: 1, name: "KBBR", isHost: true, img: "https://i.pinimg.com/736x/11/18/61/11186158397a0d0ea0ebac9bc4c1fa97.jpg" },
-        { id: 2, name: "TDR", isHost: false, img: "https://i.pinimg.com/1200x/8f/63/52/8f63524597afe9bbe3a68c294c0dfdb1.jpg" },
-        { id: 3, name: "SGR", isHost: false, img: "https://i.pinimg.com/1200x/e9/24/3a/e9243a618b17990c278c20ed8b4bd1ce.jpg" },
-        { id: 4, name: "OC", isHost: false, img: "https://i.pinimg.com/736x/a4/03/91/a403916e4a6ad8df28b18744fff47702.jpg" },
-    ];
+    // const players = [
+    //     { id: 1, name: "KBBR", isHost: true, img: "https://i.pinimg.com/736x/11/18/61/11186158397a0d0ea0ebac9bc4c1fa97.jpg" },
+    //     { id: 2, name: "TDR", isHost: false, img: "https://i.pinimg.com/1200x/8f/63/52/8f63524597afe9bbe3a68c294c0dfdb1.jpg" },
+    //     { id: 3, name: "SGR", isHost: false, img: "https://i.pinimg.com/1200x/e9/24/3a/e9243a618b17990c278c20ed8b4bd1ce.jpg" },
+    //     { id: 4, name: "OC", isHost: false, img: "https://i.pinimg.com/736x/a4/03/91/a403916e4a6ad8df28b18744fff47702.jpg" },
+    // ];
 
-    const maxPlayers = 4;
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(roomCode);
@@ -110,24 +125,26 @@ const CreateRoomLobby = () => {
             {/* Lobby area */}
             <div className="relative z-20 flex flex-col items-center justify-start h-full px-6 pt-8 pb-10">
                 {/* Host card */}
-                <motion.div
-                    initial={{ opacity: 0, y: -30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="relative w-48 h-56 mb-6 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(139,31,169,0.5)] border-2 border-pink-500/60"
-                >
-                    <img
-                        src={players[0].img}
-                        alt={players[0].name}
-                        className="absolute inset-0 w-full h-full object-cover brightness-90"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end items-center pb-1">
-                        <p className="font-semibold text-lg">{players[0].name}</p>
-                        <span className="mt-1 px-3 py-1 text-xs bg-gradient-to-r from-[#b5179e] to-[#5b0f7e] rounded-full font-bold tracking-wide shadow-[0_0_15px_rgba(181,23,158,0.4)]">
-                            HOST
-                        </span>
-                    </div>
-                </motion.div>
+                {hostPlayer && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="relative w-48 h-56 mb-6 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(139,31,169,0.5)] border-2 border-pink-500/60"
+                    >
+                        <img
+                            src={"https://i.pinimg.com/736x/11/18/61/11186158397a0d0ea0ebac9bc4c1fa97.jpg"}
+                            alt={hostPlayer.nickName}
+                            className="absolute inset-0 w-full h-full object-cover brightness-90"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end items-center pb-1">
+                            <p className="font-semibold text-lg">{hostPlayer.nickName}</p>
+                            <span className="mt-1 px-3 py-1 text-xs bg-gradient-to-r from-[#b5179e] to-[#5b0f7e] rounded-full font-bold tracking-wide shadow-[0_0_15px_rgba(181,23,158,0.4)]">
+                                HOST
+                            </span>
+                        </div>
+                    </motion.div>
+                )}
 
                 {/* Other players */}
                 <motion.div
@@ -148,18 +165,18 @@ const CreateRoomLobby = () => {
                                 className="relative w-40 h-48 rounded-2xl overflow-hidden border border-pink-400/50 shadow-[0_0_20px_rgba(139,31,169,0.4)]"
                             >
                                 <img
-                                    src={player.img}
-                                    alt={player.name}
+                                    src={"https://i.pinimg.com/1200x/8f/63/52/8f63524597afe9bbe3a68c294c0dfdb1.jpg" }
+                                    alt={player.nickName}
                                     className="absolute inset-0 w-full h-full object-cover brightness-90"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end items-center pb-4">
-                                    <p className="font-semibold">{player.name}</p>
+                                    <p className="font-semibold">{player.nickName}</p>
                                 </div>
                             </motion.div>
                         ))}
 
                     {/* Empty Slots */}
-                    {Array.from({ length: maxPlayers - players.length }).map((_, i) => (
+                    {Array.from({ length: Math.max(0, maxPlayers - players.length) }).map((_, i) => (
                         <div
                             key={i}
                             className="w-40 h-48 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-white/20 bg-[#1a001f]/20 backdrop-blur-md text-gray-400"
